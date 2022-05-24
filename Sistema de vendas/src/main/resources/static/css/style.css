@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.navbar,a{
+	padding: 10px;
+	margin-bottom: 15px;
+	text-decoration: none;
+	color: white;
+	
+}
+
+.navbar{
+	background-color: #ad7fa8;
+}
+

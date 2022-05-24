@@ -1,0 +1,63 @@
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<head>
+<link th:href=@{../css/bootstrap.min.css} rel="stylesheet" />
+<link th:href=@{../css/style.css} rel="stylesheet" />
+
+</head>
+<body>
+<nav class="navbar">
+        <h2>Stefanini Sistema de Vendas</h2>
+        <div class="menu">
+        <a href="/vender/">Comprar</a>
+        <a href="/produtos/mostrar">Lista de Produtos</a>
+        <a href="/vendas/">Itens vendidos</a>
+        </div>
+    </nav>
+<main layout:fragment="contenido">
+    <div class="col-12">
+            <h2>Produtos</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensagem != null}"
+             th:text="${mensagem}"
+             class="alert">
+        </div>
+        <a class="btn btn-success mb-2" th:href="@{/produtos/cadastrar}">Cadastrar</a>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Codigo</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Editar</th>
+                    <th>Exluir</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="produto : ${produtos}">
+                    <td th:text="${produto.nome}"></td>
+                    <td th:text="${produto.codigo}"></td>
+                    <td th:text="${produto.preco}"></td>
+                    <td th:text="${produto.estoque}"></td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/produtos/editar/} + ${produto.id}">Editar <i
+                                class="fa fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <form th:action="@{/produtos/deletar}" method="post">
+                            <input type="hidden" name="id" th:value="${produto.id}"/>
+                            <button type="submit" class="btn btn-danger">excluir <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>

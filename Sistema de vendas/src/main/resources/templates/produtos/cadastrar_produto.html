@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<head>
+<link th:href=@{../css/bootstrap.min.css} rel="stylesheet" />
+<link th:href=@{../css/style.css} rel="stylesheet" />
+
+</head>
+<body>
+<nav class="navbar">
+        <h2>Stefanini Sistema de Vendas</h2>
+        <div class="menu">
+        <a href="/vender/">Comprar</a>
+        <a href="/produtos/mostrar">Lista de Produtos</a>
+        <a href="/vendas/">Itens vendidos</a>
+        </div>
+    </nav>
+<main layout:fragment="conteudo">
+    <div class="col-12">
+        <h2>Cadastrar produto</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensagem != null}"
+             th:text="${mensagem}"
+             class="alert">
+        </div>
+        <form th:object="${produto}" th:action="@{/produtos/cadastrar}" method="post">
+            <div class="form-group">
+                <label for="nombre">Nome do Produto</label>
+                <input autocomplete="off" autofocus th:field="*{nome}" id="nome"
+                       placeholder="Digite o nome do produto" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{nome}"></div>
+            </div>
+            <div class="form-group">
+                <label for="codigo">Código de barras</label>
+                <input autocomplete="off" th:field="*{codigo}" id="codigo" placeholder="Digite o codigo do produto"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{codigo}"></div>
+
+            </div>
+            <div class="form-group">
+                <label for="estoque">Estoque</label>
+                <input autocomplete="off" th:field="*{estoque}" id="estoque"
+                       placeholder="Quantidade do Produto" type="number"
+                       class="form-control" th:classappend="${#fields.hasErrors('estoque')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{estoque}"></div>
+
+            </div>
+            <div class="form-group">
+                <label for="estoque">Preço</label>
+                <input autocomplete="off" th:field="*{preco}" id="preco" placeholder="preco do produto"
+                       type="number"
+                       class="form-control" th:classappend="${#fields.hasErrors('preco')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{preco}"></div>
+
+            </div>
+            <button class="btn btn-success" type="submit">Salvar</button>
+            &nbsp;<a class="btn btn-warning" th:href="@{/produtos/mostrar}">Ver todos</a>
+        </form>
+    </div>
+</main>
+</body>
+</html>

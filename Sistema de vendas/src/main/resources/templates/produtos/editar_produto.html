@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<head>
+<link th:href=@{../css/bootstrap.min.css} rel="stylesheet" />
+<link th:href=@{../css/style.css} rel="stylesheet" />
+
+</head>
+<body>
+<nav class="navbar">
+        <h2>Stefanini Sistema de Vendas</h2>
+        <div class="menu">
+        <a href="/vender/">Comprar</a>
+        <a href="/produtos/mostrar">Lista de Produtos</a>
+        <a href="/vendas/">Itens vendidos</a>
+        </div>
+    </nav>
+<main layout:fragment="conteudo">
+    <div class="col-12">
+        <h2>Editar Produto </h2>
+        <form th:object="${produto}" th:action="@{/produtos/editar/} + ${produto.id}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <div class="form-group">
+                <label for="nombe">Nome do Produto</label>
+                <input autocomplete="off" autofocus th:field="*{nome}" id="nome"
+                       placeholder="Digite o nome do produto" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{nome}"></div>
+            </div>
+            <div class="form-group">
+                <label for="codigo">Codigo</label>
+                <input autocomplete="off" th:field="*{codigo}" id="codigo" placeholder="Digite o Codigo do Produto"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{codigo}"></div>
+            </div>
+            <div class="form-group">
+                <label for="quantidade">Estoque</label>
+                <input autocomplete="off" th:field="*{estoque}" id="estoque"
+                       placeholder="Quantidade atual do produto" type="number"
+                       class="form-control" th:classappend="${#fields.hasErrors('estoque')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{estoque}"></div>
+            </div>
+            <div class="form-group">
+                <label for="estoque">Preço</label>
+                <input autocomplete="off" th:field="*{preco}" id="preco" placeholder="Preco do produto"
+                       type="number"
+                       class="form-control" th:classappend="${#fields.hasErrors('preco')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{preco}"></div>
+            </div>
+            <button class="btn btn-success" type="submit">Salvar</button>
+            &nbsp;<a class="btn btn-warning" th:href="@{/produtos/mostrar}">Ver todos</a>
+        </form>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,69 @@
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link th:href=@{../css/bootstrap.min.css} rel="stylesheet" />
+<link th:href=@{../css/style.css} rel="stylesheet" />
+
+</head>
+<body>
+<nav class="navbar">
+        <h2>Stefanini Sistema de Vendas</h2>
+        <div class="menu">
+        <a href="/vender/">Comprar</a>
+        <a href="/produtos/mostrar">Lista de Produtos</a>
+        <a href="/vendas/">Itens vendidos</a>
+        </div>
+    </nav>
+
+
+<main>
+    <div class="col-12">
+        <h2>Vendas Realizadas</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensagem != null}"
+             th:text="${mensagem}"
+             class="alert">
+        </div>
+        <a class="btn btn-success mb-2" th:href="@{/vender/}">Efetuar uma compra</a>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Fechar</th>
+                    <th>Total</th>
+                    <th>Produtos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="venda : ${vendas}">
+                    <td th:text="${venda.data}"></td>
+                    <td th:text="${venda.total}"></td>
+                    <td>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Código do produto</th>
+                                <th>Quantidade vendida</th>
+                                <th>Preço</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="produto : ${venda.produtos}">
+                                <td th:text="${produto.nome}"></td>
+                                <td th:text="${produto.codigo}"></td>
+                                <td th:text="${produto.quantidade}"></td>
+                                <td th:text="${produto.preco}"></td>
+                                <td th:text="${produto.total}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>

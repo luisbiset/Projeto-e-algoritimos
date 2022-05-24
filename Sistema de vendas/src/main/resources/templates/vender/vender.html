@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link th:href=@{../css/bootstrap.min.css} rel="stylesheet" />
+<link th:href=@{../css/style.css} rel="stylesheet" />
+
+</head>
+<body>
+<nav class="navbar">
+        <h2>Stefanini Sistema de Vendas</h2>
+        <div class="menu">
+        <a href="/vender/">Comprar</a>
+        <a href="/produtos/mostrar">Lista de Produtos</a>
+        <a href="/vendas/">Itens vendidos</a>
+        </div>
+    </nav>
+<main>
+    <div class="col-12">
+        <h2 >Vender</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensagem != null}"
+             th:text="${mensagem}"
+             class="alert">
+        </div>
+        <form th:object="${produto}" th:action="@{/vender/adicionar}" method="post">
+            <div class="form-group">
+                <label for="codigo">Codigo do Produto</label>
+                <input autofocus autocomplete="off" th:field="*{codigo}" id="codigo"
+                       placeholder="Digite o codigo do produto"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{codigo}"></div>
+
+            </div>
+        </form>
+        <form class="mb-2" th:action="@{/vender/fechar}" method="post">
+            <button type="submit" class="btn btn-success">finalizar compra &nbsp;<i class="fa fa-check"></i>
+            </button>
+            <a th:href="@{/vender/limpar}" class="btn btn-danger">cancelar venda&nbsp;<i
+                    class="fa fa-trash"></i>
+            </a>
+        </form>
+        <h1 th:text="${'Total: ' + total}"></h1>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Código</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Total</th>
+                    
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="produto, iterator : ${session.carrinho}">
+                    <td th:text="${produto.nome}"></td>
+                    <td th:text="${produto.codigo}"></td>
+                    <td th:text="${produto.preco}"></td>
+                    <td th:text="${produto.quantidade}"></td>
+                    <td th:text="${produto.total}"></td>
+                    <td>
+                        <form th:action="@{/vender/deletar} + ${iterator.index}" method="post">
+                            
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>
